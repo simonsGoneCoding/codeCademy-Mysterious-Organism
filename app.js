@@ -44,19 +44,43 @@ const pAequorFactory = (num, arr) => {
           sharedDNA++;
         }
       });
-      console.log(sharedDNA);
-      const comparedDNA = (sharedDNA / 15) * 100;
-      console.log(
-        `Secimen #${this.specimenNum} and specimen #${
-          obj.specimenNum
-        }: have ${comparedDNA.toFixed(2)}% DNA in common.`
-      );
+
+      const comparedDNA = (sharedDNA / this.dna.length) * 100;
+      const message = `Secimen #${this.specimenNum} and specimen #${
+        obj.specimenNum
+      }: have ${comparedDNA.toFixed(2)}% DNA in common.`;
+
+      console.log(message);
+    },
+
+    willLikelySurvive() {
+      //checks if specimen has at least 60% of 'C' or 'G' bases.
+      let sumUpGenes = 0;
+      this.dna.forEach((item) => {
+        if (item === "G" || item === "C") {
+          sumUpGenes++;
+        }
+      });
+      const chanceOfSurvival = (sumUpGenes / this.dna.length) * 100;
+
+      if (chanceOfSurvival >= 60) {
+        console.log("true");
+        return true;
+      } else {
+        console.log("false");
+        return false;
+      }
     },
   };
 };
 
-const one = pAequorFactory(1, mockUpStrand());
-const two = pAequorFactory(2, mockUpStrand());
-console.log(one.dna);
-console.log(two.dna);
-one.compareDNA(two);
+const createXinstances = (x) => {
+  const emptyArr = new Array(x);
+  for (let i = 0; i < emptyArr.length; i++) {
+    emptyArr[i] = pAequorFactory(i + 1, mockUpStrand());
+  }
+  return emptyArr;
+};
+
+const instancesForResarch = createXinstances(30);
+console.log(instancesForResarch);
