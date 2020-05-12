@@ -24,11 +24,8 @@ const pAequorFactory = (num, arr) => {
       const mutatedGene = dnaBasesToMutate.splice(
         dnaBasesToMutate.indexOf(randomToMutate),
         1
-      ); // gives array of gens to mutate -excluding base gen to mutate
-      console.log(dnaBasesToMutate);
-      console.log(mutatedGene);
-
-      //find gen within dna array
+      );
+      //find gene within dna array
       this.dna.map((gene, index) => {
         if (gene === mutatedGene[0]) {
           this.dna[index] =
@@ -38,10 +35,28 @@ const pAequorFactory = (num, arr) => {
         }
       });
     },
+
+    compareDNA(obj) {
+      // compare this.dna and obj.dna and return percetage of DNA they two have in common.
+      let sharedDNA = 0;
+      this.dna.forEach((item, index) => {
+        if (item === obj.dna[index]) {
+          sharedDNA++;
+        }
+      });
+      console.log(sharedDNA);
+      const comparedDNA = (sharedDNA / 15) * 100;
+      console.log(
+        `Secimen #${this.specimenNum} and specimen #${
+          obj.specimenNum
+        }: have ${comparedDNA.toFixed(2)}% DNA in common.`
+      );
+    },
   };
 };
 
 const one = pAequorFactory(1, mockUpStrand());
+const two = pAequorFactory(2, mockUpStrand());
 console.log(one.dna);
-console.log(one.mutate());
-console.log(one.dna);
+console.log(two.dna);
+one.compareDNA(two);
